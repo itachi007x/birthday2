@@ -111,72 +111,82 @@ audio{
 </audio>
 
 <script>
-/* TYPING TEXT */
+/* TAP TO START MUSIC */
+document.body.addEventListener("click", ()=>{
+    document.getElementById("music").play();
+},{once:true});
+
+/* TYPE TEXT */
 const lines = [
     "Hey you 💖",
     "Happy Birthday Inder 🎂",
     "May God bless you 🌸",
-    "And give u many happiness 💕",
-    "Just saying... you're pretty awesome 💫",
-    "Sending good vibes and maybe a wink 😉",
-    "Hope you have a great day today ❤️"
+    "May your life be full of love 💕",
+    "Today is special because of you 💫",
+    "Have the best day ❤️"
 ];
 
 let i=0,j=0;
-const msg = document.getElementById("message");
+const msg=document.getElementById("message");
 
 function type(){
     if(i<lines.length){
         if(j<lines[i].length){
-            msg.innerHTML += lines[i][j];
-            j++;
-            setTimeout(type,50);
+            msg.innerHTML+=lines[i][j++];
+            setTimeout(type,45);
         }else{
-            msg.innerHTML += "<br>";
-            i++;
-            j=0;
-            setTimeout(type,400);
+            msg.innerHTML+="<br>";
+            i++; j=0;
+            setTimeout(type,300);
         }
     }
 }
 type();
 
-/* HEART TREE */
-const canvas = document.getElementById("tree");
-const ctx = canvas.getContext("2d");
+/* HEART SPIRAL TREE */
+const canvas=document.getElementById("tree");
+const ctx=canvas.getContext("2d");
 
-function drawTree(){
+let t=0;
+function drawHeartSpiral(){
     ctx.clearRect(0,0,400,600);
 
-    // trunk
-    ctx.fillStyle="#f3b5b5";
-    ctx.fillRect(190,350,20,200);
+    /* trunk */
+    ctx.fillStyle="#f2b5b5";
+    ctx.fillRect(190,360,20,200);
 
-    // heart leaves
-    for(let i=0;i<400;i++){
-        let x = 200 + Math.random()*200-100;
-        let y = 250 + Math.random()*200-100;
-        let d = Math.sqrt((x-200)**2+(y-250)**2);
-        if(d<100){
-            ctx.fillStyle = `hsl(${Math.random()*360},80%,70%)`;
-            ctx.fillRect(x,y,4,4);
-        }
+    ctx.save();
+    ctx.translate(200,260);
+
+    for(let i=0;i<250;i++){
+        let a = i * 0.25 + t;
+        let r = 80 * Math.sin(a);
+
+        /* heart equation */
+        let x = 16 * Math.pow(Math.sin(a),3);
+        let y = -(13*Math.cos(a)-5*Math.cos(2*a)-2*Math.cos(3*a)-Math.cos(4*a));
+
+        ctx.fillStyle = `hsl(${(i*4+t*50)%360},80%,70%)`;
+        ctx.fillRect(x*4, y*4, 3, 3);
     }
+    ctx.restore();
+
+    t += 0.02;
+    requestAnimationFrame(drawHeartSpiral);
 }
-drawTree();
+drawHeartSpiral();
 
 /* FALLING HEARTS */
 function createHeart(){
-    const h = document.createElement("div");
+    const h=document.createElement("div");
     h.className="heart";
-    h.style.left=Math.random()*window.innerWidth+"px";
-    h.style.background=`hsl(${Math.random()*360},80%,60%)`;
+    h.style.left=Math.random()*innerWidth+"px";
     h.style.animationDuration=3+Math.random()*3+"s";
+    h.style.background=`hsl(${Math.random()*360},80%,60%)`;
     document.body.appendChild(h);
     setTimeout(()=>h.remove(),6000);
 }
-setInterval(createHeart,150);
+setInterval(createHeart,120);
 </script>
-
 </body>
 </html>
