@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Happy Birthday Inder 💖</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    background: black;
+    overflow: hidden;
+    font-family: 'Poppins', sans-serif;
+    color: white;
+    height: 100vh;
+}
+
+/* Birthday Text */
+.text {
+    position: absolute;
+    top: 40%;
+    left: 20px;
+    transform: translateY(-50%);
+    font-size: 15px;
+    line-height: 1.8;
+    z-index: 10;
+}
+
+.text span {
+    color: #ff4d6d;
+    font-weight: bold;
+}
+
+/* Footer */
+.footer {
+    position: absolute;
+    bottom: 25px;
+    width: 100%;
+    text-align: center;
+    font-size: 20px;
+    z-index: 10;
+}
+
+/* Canvas */
+canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+/* Falling hearts */
+.heart {
+    position: absolute;
+    top: -10px;
+    font-size: 18px;
+    animation: fall linear infinite;
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(110vh);
+        opacity: 0;
+    }
+}
+
+/* Tap hint */
+.tap {
+    position: absolute;
+    top: 20px;
+    width: 100%;
+    text-align: center;
+    font-size: 13px;
+    opacity: 0.6;
+}
+</style>
+</head>
+
+<body>
+
+<div class="tap">tap anywhere 💖</div>
+
+<div class="text">
+    Hey you 💕<br>
+    <span>Happy Birthday Inder</span> 🎂<br>
+    May God bless you ✨<br>
+    With smiles & dreams 🌸<br>
+    Just saying… you’re amazing 💖<br>
+    Always & forever 🌙
+</div>
+
+<div class="footer">
+    making sure she feels special 💗
+</div>
+
+<canvas id="canvas"></canvas>
+
+<!-- Background Music -->
+<audio id="music" loop>
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mp3">
+</audio>
+
+<script>
+/* Play music on tap (mobile autoplay fix) */
+document.body.addEventListener("click", () => {
+    document.getElementById("music").play();
+});
+
+/* Heart Shape Animation */
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+
+function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
+resize();
+
+let particles = [];
+
+function heartShape(t) {
+    return {
+        x: 16 * Math.pow(Math.sin(t), 3),
+        y: -(13 * Math.cos(t) - 5 * Math.cos(2*t) - 2 * Math.cos(3*t) - Math.cos(4*t))
+    };
+}
+
+class Particle {
+    constructor(x, y) {
+        this.x = canvas.width / 2 + x * 12;
+        this.y = canvas.height / 2 + y * 12;
+        this.size = Math.random() * 2 + 1;
+        this.color = `hsl(${Math.random()*360},100%,70%)`;
+    }
+    draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI*2);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+    }
+}
+
+function createHeart() {
+    particles = [];
+    for (let t = 0; t < Math.PI*2; t += 0.03) {
+        const pos = heartShape(t);
+        particles.push(new Particle(pos.x, pos.y));
+    }
+}
+
+function animate() {
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    particles.forEach(p => p.draw());
+    requestAnimationFrame(animate);
+}
+createHeart();
+animate();
+
+/* Falling hearts */
+function createFallingHeart() {
+    const heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML = "💖";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.animationDuration = (Math.random() * 3 + 3) + "s";
+    document.body.appendChild(heart);
+
+    setTimeout(() => heart.remove(), 6000);
+}
+setInterval(createFallingHeart, 300);
+
+window.addEventListener("resize", resize);
+</script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Happy Birthday Inder 💖</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    background: black;
+    overflow: hidden;
+    font-family: 'Poppins', sans-serif;
+    color: white;
+    height: 100vh;
+}
+
+/* Birthday Text */
+.text {
+    position: absolute;
+    top: 40%;
+    left: 20px;
+    transform: translateY(-50%);
+    font-size: 15px;
+    line-height: 1.8;
+    z-index: 10;
+}
+
+.text span {
+    color: #ff4d6d;
+    font-weight: bold;
+}
+
+/* Footer */
+.footer {
+    position: absolute;
+    bottom: 25px;
+    width: 100%;
+    text-align: center;
+    font-size: 20px;
+    z-index: 10;
+}
+
+/* Canvas */
+canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+/* Falling hearts */
+.heart {
+    position: absolute;
+    top: -10px;
+    font-size: 18px;
+    animation: fall linear infinite;
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(110vh);
+        opacity: 0;
+    }
+}
+
+/* Tap hint */
+.tap {
+    position: absolute;
+    top: 20px;
+    width: 100%;
+    text-align: center;
+    font-size: 13px;
+    opacity: 0.6;
+}
+</style>
+</head>
+
+<body>
+
+<div class="tap">tap anywhere 💖</div>
+
+<div class="text">
+    Hey you 💕<br>
+    <span>Happy Birthday Inder</span> 🎂<br>
+    May God bless you ✨<br>
+    With smiles & dreams 🌸<br>
+    Just saying… you’re amazing 💖<br>
+    Always & forever 🌙
+</div>
+
+<div class="footer">
+    making sure she feels special 💗
+</div>
+
+<canvas id="canvas"></canvas>
+
+<!-- Background Music -->
+<audio id="music" loop>
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mp3">
+</audio>
+
+<script>
+/* Play music on tap (mobile autoplay fix) */
+document.body.addEventListener("click", () => {
+    document.getElementById("music").play();
+});
+
+/* Heart Shape Animation */
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+
+function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
+resize();
+
+let particles = [];
+
+function heartShape(t) {
+    return {
+        x: 16 * Math.pow(Math.sin(t), 3),
+        y: -(13 * Math.cos(t) - 5 * Math.cos(2*t) - 2 * Math.cos(3*t) - Math.cos(4*t))
+    };
+}
+
+class Particle {
+    constructor(x, y) {
+        this.x = canvas.width / 2 + x * 12;
+        this.y = canvas.height / 2 + y * 12;
+        this.size = Math.random() * 2 + 1;
+        this.color = `hsl(${Math.random()*360},100%,70%)`;
+    }
+    draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI*2);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+    }
+}
+
+function createHeart() {
+    particles = [];
+    for (let t = 0; t < Math.PI*2; t += 0.03) {
+        const pos = heartShape(t);
+        particles.push(new Particle(pos.x, pos.y));
+    }
+}
+
+function animate() {
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    particles.forEach(p => p.draw());
+    requestAnimationFrame(animate);
+}
+createHeart();
+animate();
+
+/* Falling hearts */
+function createFallingHeart() {
+    const heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML = "💖";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.animationDuration = (Math.random() * 3 + 3) + "s";
+    document.body.appendChild(heart);
+
+    setTimeout(() => heart.remove(), 6000);
+}
+setInterval(createFallingHeart, 300);
+
+window.addEventListener("resize", resize);
+</script>
+
+</body>
+</html>
